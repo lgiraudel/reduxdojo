@@ -6,10 +6,11 @@ import { Provider } from 'react-redux';
 import reducers from './reducers/reducers';
 import createLogger from 'redux-logger';
 import { compose, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
 const loggerMiddleware = createLogger();
 var createStoreWithMiddleware = compose(
-    applyMiddleware(loggerMiddleware)
+    applyMiddleware(thunkMiddleware, loggerMiddleware)
 )(createStore);
 
 var store = createStoreWithMiddleware(reducers);

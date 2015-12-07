@@ -3,6 +3,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var path = require('path');
 var nunjucks = require('nunjucks');
+var mongoose = require('mongoose');
 
 /*
  * APP CONFIGURATION
@@ -21,11 +22,32 @@ nunjucks.configure('server/views', {
 });
 
 /*
+ * MODELS DECLARATIONS
+ */
+const Schema = mongoose.Schema;
+const TodoSchema = new Schema({
+    text: String,
+    done: Boolean
+});
+const Todo = mongoose.model('Todo', TodoSchema);
+mongoose.connect('mongodb://localhost/reduxdojo');
+
+/*
  * ROUTING
  */
 var router = express.Router();
 router.get('/', function(req, res) {
     res.render('index', { title: 'My Todo List' });
+});
+router.post('/todos', function(req, res) {
+    new Todo({
+        text: req.body.text,
+        done: req.body.done
+    }).save(function(err, todo) {
+        if (err) throw err;
+
+        res.end(JSON.stringify(todo));
+    })
 });
 app.use(router);
 

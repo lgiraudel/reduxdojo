@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addTodo, toggleTodo } from '../actions/actions';
 
 class App extends Component {
     render() {
@@ -26,13 +27,13 @@ class App extends Component {
 
     handleKeyDown(event) {
         if (event.keyCode === 13) {
-            this.props.dispatch({type: 'ADD_TODO', text: this.refs.newTodo.value});
+            this.props.dispatch(addTodo(this.refs.newTodo.value));
             this.refs.newTodo.value = '';
         }
     }
 
     handleTodoClick(index) {
-        this.props.dispatch({type: 'TOGGLE_TODO', index: index});
+        this.props.dispatch(toggleTodo(index));
     }
 }
 
