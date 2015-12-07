@@ -8,7 +8,12 @@ class App extends Component {
                 <h1>My Todo List</h1>
                 <ul>
                     {this.props.todos.map((todo, i) =>
-                        <li key={i}>{todo.text}</li>
+                        <li key={i}
+                            style={{
+                                textDecoration: todo.done ? 'line-through' : ''
+                            }}
+                            onClick={() => this.handleTodoClick(i)}
+                        >{todo.text}</li>
                     )}
                 </ul>
                 <div className='form-group'>
@@ -24,6 +29,10 @@ class App extends Component {
             this.props.dispatch({type: 'ADD_TODO', text: this.refs.newTodo.value});
             this.refs.newTodo.value = '';
         }
+    }
+
+    handleTodoClick(index) {
+        this.props.dispatch({type: 'TOGGLE_TODO', index: index});
     }
 }
 
