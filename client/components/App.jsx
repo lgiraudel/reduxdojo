@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            todos: [{text: 'Buy some milk'}, {text: 'Prepare dojo'}, {text: 'Annoy the cat'}]
-        };
-    }
-
     render() {
         return (
             <div className='container'>
                 <h1>My Todo List</h1>
                 <ul>
-                    {this.state.todos.map((todo, i) =>
+                    {this.props.todos.map((todo, i) =>
                         <li key={i}>{todo.text}</li>
                     )}
                 </ul>
@@ -27,12 +21,16 @@ class App extends Component {
 
     handleKeyDown(event) {
         if (event.keyCode === 13) {
-            this.setState({
-                todos: this.state.todos.concat([{text: this.refs.newTodo.value}])
-            });
+            this.props.dispatch({type: 'ADD_TODO', text: this.refs.newTodo.value});
             this.refs.newTodo.value = '';
         }
     }
 }
 
-export default App;
+function filter(state) {
+    return {
+        todos: state
+    }
+}
+
+export default connect(filter)(App);
