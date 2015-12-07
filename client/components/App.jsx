@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo, toggleTodo } from '../actions/actions';
+import { addTodo, toggleTodo, fetchTodos } from '../actions/actions';
 
 class App extends Component {
+    componentDidMount() {
+        this.props.dispatch(fetchTodos());
+    }
+
     render() {
         return (
             <div className='container'>

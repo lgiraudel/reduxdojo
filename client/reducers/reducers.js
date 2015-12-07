@@ -1,4 +1,4 @@
-function reducers(state = [{text: 'Buy some milk', done: false,}, {text: 'Prepare dojo', done: true}, {text: 'Annoy the cat', done: true}], action) {
+function reducers(state = [], action) {
     switch (action.type) {
         case 'ADD_TODO':
             return state.concat(action.todo);
@@ -13,6 +13,10 @@ function reducers(state = [{text: 'Buy some milk', done: false,}, {text: 'Prepar
                  },
                  ...state.slice(action.index + 1)
              ];
+        case 'RECEIVE_TODOS':
+            return [
+                ...action.todos
+            ];
         default:
             return state;
     }

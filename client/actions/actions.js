@@ -17,3 +17,15 @@ export function addTodo(text) {
 export function toggleTodo(index) {
     return {type: 'TOGGLE_TODO', index: index};
 }
+
+export function fetchTodos() {
+    return function(dispatch) {
+        return fetch('/todos', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .then(json => dispatch({type: 'RECEIVE_TODOS', todos: json}));
+    };
+}

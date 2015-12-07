@@ -39,6 +39,13 @@ var router = express.Router();
 router.get('/', function(req, res) {
     res.render('index', { title: 'My Todo List' });
 });
+router.get('/todos', function(req, res) {
+    Todo.find(function(err, todos) {
+        if (err) throw err;
+
+        res.end(JSON.stringify(todos));
+    });
+});
 router.post('/todos', function(req, res) {
     new Todo({
         text: req.body.text,
